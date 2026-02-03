@@ -1,0 +1,36 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual env
+faceai/
+env/
+venv/
+
+# Data (DO NOT UPLOAD)
+dataset/
+attendance/attendance.csv
+model.pkl
+
+# IDE
+.vscode/
+
+# System
+Thumbs.db
+.DS_Store
+
+# Local data
+attendance_system.db
+config.json
+logs/
+attendance/
+*.csv
+tempCodeRunnerFile.py
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment
+.env
+.venv
