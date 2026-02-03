@@ -1,162 +1,139 @@
-
 # 🎯 AI Face Recognition Attendance System
 
-An intelligent attendance management system using Face Recognition, Python, OpenCV, Tkinter, and SQLite.  
-Automatically marks attendance when a registered face is detected.
+An AI-based desktop application for automatic attendance using face recognition.
 
 ---
 
-## 📌 Features
+## 🚀 Features
 
-- ✅ Real-time face detection & recognition  
-- ✅ Automatic attendance marking  
-- ✅ Secure SQLite database storage  
-- ✅ Interactive Tkinter GUI  
-- ✅ Student registration & management  
-- ✅ Analytics dashboard  
-- ✅ Report generation  
-- ✅ Export to CSV / Excel / JSON  
-- ✅ Camera auto-reconnect system  
-- ✅ Activity logging  
+- Real-time face detection
+- Automatic attendance marking
+- Tkinter GUI
+- Student registration
+- SQLite database
+- Attendance reports
+- Analytics dashboard
+- Export to CSV / Excel / JSON
+- Activity logs
 
 ---
 
-## 🛠️ Tech Stack
+## 🖥️ Tech Stack
 
 - Python 3.10+
 - OpenCV
-- face_recognition (dlib)
+- face_recognition
 - Tkinter
 - SQLite
 - Pandas
-- Pillow
 - Matplotlib
+- Git
 
 ---
 
 ## 📂 Project Structure
 
+```
 FaceAttendance/
 │
-├── gui.py # Main GUI application
-├── recognize.py # Face recognition engine
-├── train_model.py # Model training script
-├── model.pkl # Trained face model
-├── attendance_system.db # SQLite database
-├── config.json # App configuration
-├── logs/ # Log files
-├── backups/ # Backup files
-├── exports/ # Exported reports
-└── README.md # Documentation
-
+├── gui.py
+├── recognize.py
+├── train_model.py
+├── model.pkl
+├── attendance_system.db
+├── requirements.txt
+├── logs/
+├── backups/
+└── README.md
+```
 
 ---
 
 ## ⚙️ Installation
 
-### 1️⃣ Clone Repository
+### Clone Repository
 
 ```bash
 git clone https://github.com/satyammpandey/fr-attendance.git
 cd fr-attendance
-2️⃣ Install Dependencies
-pip install opencv-python face-recognition pandas pillow matplotlib
-If dlib fails:
+```
 
-Install CMake
+### Install Dependencies
 
-Install Visual Studio Build Tools
+```bash
+pip install -r requirements.txt
+```
 
-Re-run the command
+---
 
-🚀 Usage
-Step 1: Train the Model (First Time Only)
-python train_model.py
-Step 2: Launch Application
+## ▶️ How to Run
+
+```bash
 python gui.py
-Step 3: Start Attendance
-Click ▶ START
+```
 
-Camera opens
+---
 
-Face is detected
+## 📸 How It Works
 
-Attendance saved automatically
+1. Register students
+2. Train face model
+3. Click START
+4. Camera opens
+5. Face detected
+6. Attendance saved
+7. Data appears in GUI
 
-Press Q to stop recognition.
+---
 
-💾 Database System
-All records are stored in:
+## 🗄️ Database
 
+File used:
+
+```
 attendance_system.db
-Main Tables
-students
+```
 
-attendance
+---
 
-sessions
+## 📊 Analytics
 
-activity_logs
+- Daily attendance
+- Weekly reports
+- Monthly analysis
+- Graph visualization
 
-🗑️ Clear Attendance Records
-To remove old records:
+---
 
+## ⌨️ Keyboard Shortcuts
+
+| Action | Key |
+|--------|-----|
+| Start  | F5  |
+| Stop   | ESC |
+| Exit   | Ctrl + Q |
+
+---
+
+## 🧹 Clear Attendance Data
+
+```sql
 DELETE FROM attendance;
-(Use DB Browser for SQLite)
+```
 
-🧠 System Workflow
-Capture face using camera
+---
 
-Generate face encoding
+## 👨‍💻 Author
 
-Compare with trained data
-
-Identify person
-
-Store attendance
-
-Update GUI dashboard
-
-❗ Troubleshooting
-Camera Not Working
-Close other apps using camera
-
-Restart system
-
-Check camera index
-
-Face Not Recognized
-Re-train model
-
-Improve lighting
-
-Add more images
-
-Attendance Not Showing
-Check database file
-
-Verify recognize.py output
-
-Check table structure
-
-📈 Future Enhancements
-Cloud backup system
-
-Mobile application
-
-Face mask detection
-
-Multi-camera support
-
-Role-based login system
-
-Cloud dashboard
-
-👨‍💻 Author
-Satyam Pandey
-BCA (AI/ML) Student
+**Satyam Pandey**  
+BCA (AI & ML)
 
 GitHub: https://github.com/satyammpandey
 
-⭐ Support
-If you found this project useful, give it a ⭐ on GitHub.
+---
+
+## 📜 License
+
+Educational Use Only
+
+Free to modify
