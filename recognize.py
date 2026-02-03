@@ -1,96 +1,147 @@
 import cv2
 import face_recognition
 import pickle
-import pandas as pd
-from datetime import datetime
 import os
+import sqlite3
+from datetime import datetime
+import time
+import sys
 
+
+# ================= CONFIG =================
 
 MODEL_FILE = "model.pkl"
-ATTENDANCE_FILE = "attendance/attendance.csv"
+DB_FILE = "attendance_system.db"
+CAMERA_INDEX = 0
+TOLERANCE = 0.5
 
 
-# ---------- Check Model ----------
+# ================= DATABASE =================
+
+def save_to_db(name):
+
+    try:
+        conn = sqlite3.connect(DB_FILE)
+        cur = conn.cursor()
+
+        now = datetime.now()
+
+        student_id = name.lower().replace(" ", "_")
+        date_today = now.strftime("%Y-%m-%d")
+
+        cur.execute("""
+            INSERT OR IGNORE INTO attendance
+            (student_id, name, date, time, status)
+            VALUES (?, ?, ?, ?, ?)
+        """, (
+            student_id,
+            name,
+            date_today,
+            now.strftime("%H:%M:%S"),
+            "Present"
+        ))
+
+        conn.commit()
+        conn.close()
+
+        print(f"[DB] Saved: {name}", flush=True)
+
+    except Exception as e:
+
+        print(f"[DB ERROR] {e}", flush=True)
+
+
+# ================= LOAD MODEL =================
 
 if not os.path.exists(MODEL_FILE):
-    print("[ERROR] model.pkl not found. Train first.")
-    exit()
+    print("[ERROR] model.pkl not found", flush=True)
+    sys.exit(1)
 
-
-# ---------- Load Model ----------
 
 with open(MODEL_FILE, "rb") as f:
     data = pickle.load(f)
 
 
-# ---------- Attendance Setup ----------
-
-os.makedirs("attendance", exist_ok=True)
-
-if not os.path.exists(ATTENDANCE_FILE):
-    df = pd.DataFrame(columns=["Name", "Date", "Time"])
-    df.to_csv(ATTENDANCE_FILE, index=False)
+known_encodings = data["encodings"]
+known_names = data["names"]
 
 
-# ---------- Camera Setup ----------
+# ================= CAMERA =================
 
-cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+def open_camera():
 
-if not cap.isOpened():
-    print("[ERROR] Camera not accessible")
-    exit()
+    cap = cv2.VideoCapture(CAMERA_INDEX, cv2.CAP_DSHOW)
+
+    if not cap.isOpened():
+        return None
+
+    return cap
 
 
-# ---------- Variables ----------
+cap = None
 
-marked_names = set()
+while cap is None:
+
+    cap = open_camera()
+
+    if cap is None:
+        print("[INFO] Waiting for camera...", flush=True)
+        time.sleep(2)
+
+
+print("[INFO] Camera started", flush=True)
+print("[INFO] Press Q to quit", flush=True)
+
+
+# ================= MAIN LOOP =================
+
+marked = set()
 frame_count = 0
 
-print("[INFO] Recognition started... Press ESC to exit")
-
-
-# ---------- Main Loop ----------
 
 while True:
 
     ret, frame = cap.read()
 
     if not ret:
-        print("[ERROR] Camera frame failed")
-        break
+
+        print("[WARNING] Camera lost, reconnecting...", flush=True)
+
+        cap.release()
+        time.sleep(1)
+
+        cap = open_camera()
+        continue
 
 
-    # Resize (reduce lag)
     frame = cv2.resize(frame, (640, 480))
 
 
-    # Skip frames (speed boost)
     frame_count += 1
+
     if frame_count % 3 != 0:
 
         cv2.imshow("Face Attendance", frame)
 
-        if cv2.waitKey(1) == 27:
+        if cv2.waitKey(1) & 0xFF == ord("q"):
             break
 
         continue
 
 
-    # Convert to RGB
     rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
 
-    # Detect faces
     faces = face_recognition.face_locations(rgb)
-    encs = face_recognition.face_encodings(rgb, faces)
+    encodings = face_recognition.face_encodings(rgb, faces)
 
 
-    for enc, (top, right, bottom, left) in zip(encs, faces):
+    for enc, (top, right, bottom, left) in zip(encodings, faces):
 
         matches = face_recognition.compare_faces(
-            data["encodings"],
+            known_encodings,
             enc,
-            tolerance=0.5
+            tolerance=TOLERANCE
         )
 
         name = "Unknown"
@@ -98,33 +149,20 @@ while True:
 
         if True in matches:
 
-            idx = matches.index(True)
-            name = data["names"][idx]
+            index = matches.index(True)
+            name = known_names[index]
 
 
-            # Mark attendance only once
-            if name not in marked_names:
+            if name not in marked:
 
-                now = datetime.now()
+                marked.add(name)
 
-                df = pd.DataFrame(
-                    [[name, now.date(), now.strftime("%H:%M:%S")]],
-                    columns=["Name", "Date", "Time"]
-                )
+                save_to_db(name)
 
-                df.to_csv(
-                    ATTENDANCE_FILE,
-                    mode="a",
-                    header=False,
-                    index=False
-                )
-
-                marked_names.add(name)
-
-                print(f"[INFO] Attendance marked: {name}")
+                print(f"[INFO] Marked: {name}", flush=True)
 
 
-        # Draw box
+        # Draw face box
         cv2.rectangle(
             frame,
             (left, top),
@@ -140,7 +178,7 @@ while True:
             name,
             (left, top - 10),
             cv2.FONT_HERSHEY_SIMPLEX,
-            0.9,
+            0.8,
             (0, 255, 0),
             2
         )
@@ -149,13 +187,15 @@ while True:
     cv2.imshow("Face Attendance", frame)
 
 
-    if cv2.waitKey(1) == 27:
+    if cv2.waitKey(1) & 0xFF == ord("q"):
         break
 
 
-# ---------- Cleanup ----------
+# ================= CLEANUP =================
+
+print("[INFO] Closing camera...", flush=True)
 
 cap.release()
 cv2.destroyAllWindows()
 
-print("[INFO] Program closed")
+print("[INFO] Recognition stopped", flush=True)
