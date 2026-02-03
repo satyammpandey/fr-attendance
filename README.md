@@ -1,117 +1,162 @@
-# 🎯 AI-Based Face Recognition Attendance System
 
-![Python](https://img.shields.io/badge/Python-3.10-blue)
-![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-green)
-![AI](https://img.shields.io/badge/AI-Deep%20Learning-orange)
-![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red)
-![Status](https://img.shields.io/badge/Status-Completed-success)
+# 🎯 AI Face Recognition Attendance System
 
-> An AI-powered real-time attendance management system using facial
-> recognition and deep learning.
+An intelligent attendance management system using Face Recognition, Python, OpenCV, Tkinter, and SQLite.  
+Automatically marks attendance when a registered face is detected.
 
-------------------------------------------------------------------------
+---
 
-## 📌 Overview
+## 📌 Features
 
-This project implements an automated attendance system using Artificial
-Intelligence and Computer Vision. It identifies individuals using facial
-features and records attendance automatically in real time.
+- ✅ Real-time face detection & recognition  
+- ✅ Automatic attendance marking  
+- ✅ Secure SQLite database storage  
+- ✅ Interactive Tkinter GUI  
+- ✅ Student registration & management  
+- ✅ Analytics dashboard  
+- ✅ Report generation  
+- ✅ Export to CSV / Excel / JSON  
+- ✅ Camera auto-reconnect system  
+- ✅ Activity logging  
 
-------------------------------------------------------------------------
-
-## 🚀 Features
-
--   Real-time face detection and recognition\
--   Automatic attendance marking\
--   Duplicate entry prevention\
--   CSV-based storage system\
--   Web dashboard (Streamlit)\
--   Offline functionality
-
-------------------------------------------------------------------------
+---
 
 ## 🛠️ Tech Stack
 
-  Category      Technology
-  ------------- ------------------------
-  Language      Python 3.10
-  Vision        OpenCV
-  AI            face_recognition, dlib
-  Data          Pandas, NumPy
-  UI            Streamlit
-  Environment   Anaconda
+- Python 3.10+
+- OpenCV
+- face_recognition (dlib)
+- Tkinter
+- SQLite
+- Pandas
+- Pillow
+- Matplotlib
 
-------------------------------------------------------------------------
+---
 
 ## 📂 Project Structure
 
-FaceAttendance/ ├── dataset/ ├── attendance/ │ └── attendance.csv ├──
-test_camera.py ├── train_model.py ├── recognize.py ├── app.py ├──
-model.pkl ├── .gitignore └── README.md
+FaceAttendance/
+│
+├── gui.py # Main GUI application
+├── recognize.py # Face recognition engine
+├── train_model.py # Model training script
+├── model.pkl # Trained face model
+├── attendance_system.db # SQLite database
+├── config.json # App configuration
+├── logs/ # Log files
+├── backups/ # Backup files
+├── exports/ # Exported reports
+└── README.md # Documentation
 
-------------------------------------------------------------------------
 
-## ⚙️ Installation & Setup
+---
 
-### Install Anaconda
+## ⚙️ Installation
 
-Download from https://www.anaconda.com
+### 1️⃣ Clone Repository
 
-### Create Environment
+```bash
+git clone https://github.com/satyammpandey/fr-attendance.git
+cd fr-attendance
+2️⃣ Install Dependencies
+pip install opencv-python face-recognition pandas pillow matplotlib
+If dlib fails:
 
-conda create -n faceai python=3.10\
-conda activate faceai
+Install CMake
 
-### Install Dependencies
+Install Visual Studio Build Tools
 
-conda install -c conda-forge dlib\
-pip install face-recognition opencv-python numpy pandas streamlit
+Re-run the command
 
-------------------------------------------------------------------------
+🚀 Usage
+Step 1: Train the Model (First Time Only)
+python train_model.py
+Step 2: Launch Application
+python gui.py
+Step 3: Start Attendance
+Click ▶ START
 
-## ▶️ How to Run
+Camera opens
 
-conda activate faceai\
-cd FaceAttendance\
-streamlit run app.py
+Face is detected
 
-------------------------------------------------------------------------
+Attendance saved automatically
 
-## 📊 Output
+Press Q to stop recognition.
 
--   Live camera feed\
--   Face recognized with name\
--   Attendance recorded in CSV\
--   Records displayed in dashboard
+💾 Database System
+All records are stored in:
 
-------------------------------------------------------------------------
+attendance_system.db
+Main Tables
+students
 
-## ⚠️ Limitations
+attendance
 
--   Sensitive to lighting\
--   Similar faces may confuse system\
--   Single camera support
+sessions
 
-------------------------------------------------------------------------
+activity_logs
 
-## 🔮 Future Enhancements
+🗑️ Clear Attendance Records
+To remove old records:
 
--   Mobile app\
--   Cloud database\
--   Multi-camera support\
--   Admin login
+DELETE FROM attendance;
+(Use DB Browser for SQLite)
 
-------------------------------------------------------------------------
+🧠 System Workflow
+Capture face using camera
 
-## 👨‍💻 Developer
+Generate face encoding
 
-Satyam Pandey\
-BCA (AI/ML Specialization)
+Compare with trained data
 
-------------------------------------------------------------------------
+Identify person
 
-## 📜 License
+Store attendance
 
-For academic and learning purposes.
+Update GUI dashboard
 
-⭐ If you find this project useful, give it a star!
+❗ Troubleshooting
+Camera Not Working
+Close other apps using camera
+
+Restart system
+
+Check camera index
+
+Face Not Recognized
+Re-train model
+
+Improve lighting
+
+Add more images
+
+Attendance Not Showing
+Check database file
+
+Verify recognize.py output
+
+Check table structure
+
+📈 Future Enhancements
+Cloud backup system
+
+Mobile application
+
+Face mask detection
+
+Multi-camera support
+
+Role-based login system
+
+Cloud dashboard
+
+👨‍💻 Author
+Satyam Pandey
+BCA (AI/ML) Student
+
+GitHub: https://github.com/satyammpandey
+
+⭐ Support
+If you found this project useful, give it a ⭐ on GitHub.
