@@ -11,6 +11,7 @@ venv/
 dataset/
 attendance/attendance.csv
 model.pkl
+dataset/
 
 # IDE
 .vscode/
