@@ -1,117 +1,265 @@
-# 🎯 AI-Based Face Recognition Attendance System
+# 🎯 AI Face Recognition Attendance System
 
-![Python](https://img.shields.io/badge/Python-3.10-blue)
-![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-green)
-![AI](https://img.shields.io/badge/AI-Deep%20Learning-orange)
-![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red)
-![Status](https://img.shields.io/badge/Status-Completed-success)
+An AI-powered desktop application for automatic attendance management using real-time face recognition and a modern GUI interface.
 
-> An AI-powered real-time attendance management system using facial
-> recognition and deep learning.
+---
 
-------------------------------------------------------------------------
+## 🌟 Features
 
-## 📌 Overview
+### 🎯 Core Functionality
+- **Real-time Face Recognition** using webcam
+- **Automatic Attendance Marking**
+- **High Accuracy Matching** with trained face encodings
+- **Live Camera Preview**
+- **Unknown Face Detection**
+- **Session-based Attendance Tracking**
 
-This project implements an automated attendance system using Artificial
-Intelligence and Computer Vision. It identifies individuals using facial
-features and records attendance automatically in real time.
+### 👥 Student Management
+- **Student Registration System**
+- **Store Student Information** (ID, Name, Department, Batch)
+- **Face Capture Support**
+- **SQLite Database Integration**
+- **Student Search & Filter**
+- **Edit / Delete Students**
 
-------------------------------------------------------------------------
+### 🖥️ User Interface
+- **Modern Tkinter GUI**
+- **Dark-Themed Professional Design**
+- **Dashboard Overview**
+- **Live Status Indicator**
+- **Activity Logs**
+- **Quick Navigation Panel**
 
-## 🚀 Features
+### 📊 Analytics & Reports
+- **Daily / Weekly / Monthly Attendance Stats**
+- **Graph Visualization**
+- **CSV / Excel / JSON Export**
+- **Attendance Reports Panel**
+- **Session History Tracking**
 
--   Real-time face detection and recognition\
--   Automatic attendance marking\
--   Duplicate entry prevention\
--   CSV-based storage system\
--   Web dashboard (Streamlit)\
--   Offline functionality
-
-------------------------------------------------------------------------
+---
 
 ## 🛠️ Tech Stack
 
-  Category      Technology
-  ------------- ------------------------
-  Language      Python 3.10
-  Vision        OpenCV
-  AI            face_recognition, dlib
-  Data          Pandas, NumPy
-  UI            Streamlit
-  Environment   Anaconda
+- **Python 3.10+** - Core language
+- **OpenCV (cv2)** - Camera & vision processing
+- **face_recognition (dlib)** - Face matching
+- **Tkinter** - GUI framework
+- **SQLite3** - Database
+- **Pandas** - Data processing
+- **Matplotlib** - Analytics charts
+- **Git & GitHub** - Version control
 
-------------------------------------------------------------------------
+---
 
-## 📂 Project Structure
+## 📋 Prerequisites
 
-FaceAttendance/ ├── dataset/ ├── attendance/ │ └── attendance.csv ├──
-test_camera.py ├── train_model.py ├── recognize.py ├── app.py ├──
-model.pkl ├── .gitignore └── README.md
+- Python 3.10 or higher
+- Webcam / Camera device
+- Windows OS (Recommended)
+- CMake (for dlib installation)
 
-------------------------------------------------------------------------
+---
 
-## ⚙️ Installation & Setup
+## 🚀 Installation
 
-### Install Anaconda
+### 1️⃣ Clone Repository
 
-Download from https://www.anaconda.com
+```bash
+git clone https://github.com/satyammpandey/fr-attendance.git
+cd fr-attendance
+```
 
-### Create Environment
+### 2️⃣ Create Virtual Environment (Optional)
 
-conda create -n faceai python=3.10\
-conda activate faceai
+```bash
+python -m venv faceai
+faceai\Scripts\activate
+```
 
-### Install Dependencies
+### 3️⃣ Install Dependencies
 
-conda install -c conda-forge dlib\
-pip install face-recognition opencv-python numpy pandas streamlit
+```bash
+pip install -r requirements.txt
+```
 
-------------------------------------------------------------------------
+---
 
-## ▶️ How to Run
+## 🎮 Usage
 
-conda activate faceai\
-cd FaceAttendance\
-streamlit run app.py
+### 1️⃣ Start GUI Application
 
-------------------------------------------------------------------------
+```bash
+python gui.py
+```
 
-## 📊 Output
+### 2️⃣ Register Students
+- Open **Students Tab**
+- Add student details
+- Capture face images
+- Save student record
 
--   Live camera feed\
--   Face recognized with name\
--   Attendance recorded in CSV\
--   Records displayed in dashboard
+### 3️⃣ Train Model
 
-------------------------------------------------------------------------
+```bash
+python train_model.py
+```
 
-## ⚠️ Limitations
+### 4️⃣ Start Attendance
+- Click **START** button
+- Camera opens
+- Face is detected
+- Attendance marked automatically
 
--   Sensitive to lighting\
--   Similar faces may confuse system\
--   Single camera support
+### 5️⃣ View Records
+- Open **Attendance Tab**
+- Filter by date
+- Export reports
 
-------------------------------------------------------------------------
+---
 
-## 🔮 Future Enhancements
+## 📁 Project Structure
 
--   Mobile app\
--   Cloud database\
--   Multi-camera support\
--   Admin login
+```
+FaceAttendance/
+│
+├── gui.py                 # Main GUI application
+├── recognize.py           # Face recognition engine
+├── train_model.py         # Model training script
+├── model.pkl              # Trained face model
+├── attendance_system.db   # SQLite database
+├── requirements.txt       # Dependencies
+├── logs/                  # Log files
+├── backups/               # Auto backups
+├── exports/               # Exported reports
+└── README.md
+```
 
-------------------------------------------------------------------------
+---
 
-## 👨‍💻 Developer
+## ⚙️ Configuration
 
-Satyam Pandey\
-BCA (AI/ML Specialization)
+Settings are stored in:
 
-------------------------------------------------------------------------
+```
+config.json
+```
+
+You can configure:
+
+- Camera index
+- Recognition threshold
+- Working hours
+- Backup interval
+- Export format
+- Notifications
+
+Through the **Settings Panel** in GUI.
+
+---
+
+## 🗄️ Database
+
+Database file:
+
+```
+attendance_system.db
+```
+
+### Tables:
+
+- students
+- attendance
+- sessions
+- activity_logs
+- settings
+
+---
+
+## 🔑 Keyboard Shortcuts
+
+| Action | Shortcut |
+|--------|----------|
+| Start Attendance | F5 |
+| Stop Attendance | ESC |
+| Exit App | Ctrl + Q |
+| Save Settings | Ctrl + S |
+
+---
+
+## 🧹 Clear Attendance Data
+
+### Delete All Records
+
+```sql
+DELETE FROM attendance;
+```
+
+### Reset Database (Optional)
+
+Delete file:
+
+```
+attendance_system.db
+```
+
+And restart application.
+
+---
+
+## 🧠 How Recognition Works
+
+1. Face images collected
+2. Encodings generated
+3. Saved in model.pkl
+4. Live camera compares faces
+5. Best match selected
+6. Attendance recorded in DB
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+You may:
+- Improve UI
+- Add features
+- Fix bugs
+- Optimize performance
+
+Fork → Modify → Pull Request
+
+---
+
+## 👨‍💻 Author
+
+**Satyam Pandey**  
+
+
+GitHub: https://github.com/satyammpandey
+
+---
 
 ## 📜 License
 
-For academic and learning purposes.
+This project is developed for educational and academic use.
 
-⭐ If you find this project useful, give it a star!
+Free to modify and extend.
+
+---
+
+## 🔮 Future Enhancements
+
+- [ ] Mobile App Integration
+- [ ] Cloud Backup
+- [ ] Face Mask Detection
+- [ ] Multi-Camera Support
+- [ ] Voice Notifications
+- [ ] Web Dashboard
+- [ ] Online Database Sync
+
+---
+
+⭐ If you like this project, give it a star on GitHub!
+
